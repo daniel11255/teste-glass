@@ -53,8 +53,8 @@
     .live-dot   { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--green); margin-right: 5px; vertical-align: middle; animation: pulse 1.8s ease-in-out infinite; }
 
     /* BUS QUICK CARD */
-    #bus-quick-card { }
-    #other-bus-quick-card { }
+    #bus-quick-card { animation: fadeUp .45s .11s cubic-bezier(.22,1,.36,1) both; }
+    #other-bus-quick-card { animation: fadeUp .45s .13s cubic-bezier(.22,1,.36,1) both; }
     .bus-quick-link { font-family: var(--mono); font-size: 11px; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 4px; }
     .bus-quick-link:hover { color: var(--accent); }
     .bus-quick-link svg { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 2.5; }
@@ -64,11 +64,11 @@
     .sched-name .dir-dot.ret { background: var(--green); }
 
     /* SECTION LABEL */
-    .section-label { font-family: var(--mono); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .15em; color: var(--muted); margin: 32px 0 16px; display: flex; align-items: center; gap: 12px; }
+    .section-label { font-family: var(--mono); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .15em; color: var(--muted); margin: 32px 0 16px; display: flex; align-items: center; gap: 12px; animation: fadeUp .45s .14s cubic-bezier(.22,1,.36,1) both; }
     .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); opacity: 0.6; }
 
     /* CARDS GRID */
-    .cards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .cards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; animation: fadeUp .45s .18s cubic-bezier(.22,1,.36,1) both; }
     .feature-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--sh); text-decoration: none; color: inherit; padding: 24px; display: flex; flex-direction: column; height: 100%; }
     .card-icon { width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0; background: var(--accent-lt); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(var(--accent-rgb), 0.1); margin-bottom: 16px; }
     .card-icon svg { width: 24px; height: 24px; fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
@@ -89,8 +89,8 @@
     .card-calendar .card-cta { color: #2563EB; }
 
     /* ANIMATIONS */
-    .clock-block    { }
-    .schedule-card  { }
+    .clock-block    { animation: fadeUp .45s cubic-bezier(.22,1,.36,1) both; }
+    .schedule-card  { animation: fadeUp .45s .08s cubic-bezier(.22,1,.36,1) both; }
     @keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 rgba(198,140,26,.4); } 70% { box-shadow: 0 0 0 8px rgba(198,140,26,0); } 100% { box-shadow: 0 0 0 0 rgba(198,140,26,0); } }
 
     @media (max-width: 860px) { .cards-grid { grid-template-columns: repeat(2,1fr); } }

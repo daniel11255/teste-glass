@@ -14,8 +14,7 @@
     .search-loading-indicator {position:absolute;right:12px;display:flex;align-items:center;gap:8px;opacity:0;pointer-events:none;transition:opacity 0.2s ease;font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:0.05em}
     .search-loading-indicator.active {opacity:1}
     .status-spinner{width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    
+
     /* Layout do Bloco de Informações (Tabela) */
     .table-card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--sh);overflow:hidden;position:relative;min-height:200px;transition:opacity 0.2s ease, transform 0.2s ease}
     .table-responsive{overflow-x:auto}
@@ -36,7 +35,7 @@
     .btn-manage svg{width:16px;height:16px}
 
     /* Estilos do Modal de Gerenciamento */
-    .modal-overlay{position:fixed;inset:0;z-index:1000;background:rgba(30,23,17,0.4);display:none;align-items:center;justify-content:center;padding:20px}
+    .modal-overlay{position:fixed;inset:0;z-index:1000;background:rgba(30,23,17,0.4);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px}
     .modal-overlay.active{display:flex}
     .modal-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;width:100%;max-width:550px;max-height:85vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--sh-hover);animation:sheetIn 0.3s ease}
     .modal-header{padding:18px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
@@ -61,12 +60,14 @@
     .email-link{color:var(--accent);text-decoration:none;font-weight:500;word-break:break-all}
     
     .hl{background:rgba(184,92,42,0.15);color:var(--accent);padding:2px 0;border-radius:2px;font-weight:600}
-    .reveal{}
+
+    .reveal{animation:reveal 0.3s cubic-bezier(0.22,1,0.36,1) both}
     .email-link:hover{text-decoration:underline}
     .copy-btn{background:var(--surface-2);border:1px solid var(--border);color:var(--muted);padding:5px;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;transition:all .2s;line-height:0}
     .copy-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
     
-    @media(max-width:640px){.container{padding:16px 12px 40px}#searchBar{max-width:100%;padding-right:120px}
+    @media(max-width:640px){
+      .container{padding:16px 12px 40px}#searchBar{max-width:100%;padding-right:120px}
       #searchBar + .search-loading-indicator span {display:none}
       table,thead,tbody,th,td,tr{display:block}
       thead tr{position:absolute;top:-9999px;left:-9999px}

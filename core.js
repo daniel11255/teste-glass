@@ -35,8 +35,8 @@ function showToast(message, duration = 2400) {
 
 // ── Tema ─────────────────────────────────────────────────────
 function setTheme(dark) {
-  document.documentElement.dataset.theme = dark ? 'dark' : '';
-  if (!dark) document.documentElement.removeAttribute('data-theme');
+  if (dark) document.documentElement.setAttribute('data-theme', 'dark');
+  else document.documentElement.removeAttribute('data-theme');
   document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#0E0B09' : '#F3EDE6');
   try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) { /* modo privado */ }
 }
@@ -68,13 +68,17 @@ function buildChrome() {
       <svg class="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       <svg class="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
     </button>`;
-  top.querySelector('.theme-btn').addEventListener('click', () => setTheme(!document.documentElement.hasAttribute('data-theme')));
+  top.querySelector('.theme-btn').addEventListener('click', e => {
+    const apply = () => setTheme(!document.documentElement.hasAttribute('data-theme'));
+    // glass.js troca por uma revelação circular; sem ele, troca direto
+    if (window.lgThemeTransition) window.lgThemeTransition(e, apply); else apply();
+  });
 
   const dock = document.createElement('nav');
-  dock.className = 'dock';
+  dock.className = 'lg-dock';
   dock.setAttribute('aria-label', 'Navegação principal');
-  dock.innerHTML = NAV.map(([id, label]) =>
-    `<a class="dock-item" href="${id}.html"${id === page ? ' aria-current="page"' : ''}>${svg(ICON[id])}<span>${label}</span></a>`
+  dock.innerHTML = '<span class="lg-lens" aria-hidden="true"></span>' + NAV.map(([id, label]) =>
+    `<a class="lg-dock-item" href="${id}.html"${id === page ? ' aria-current="page"' : ''}>${svg(ICON[id])}<span>${label}</span></a>`
   ).join('');
 
   document.body.prepend(top);
