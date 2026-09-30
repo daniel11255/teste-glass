@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F3EDE6">
+<title>Ônibus — Portal 1INFO-2</title>
+<script>try{if(localStorage.getItem('theme')==='dark')document.documentElement.dataset.theme='dark'}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="css/onibus.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="onibus">
+<main>
+    <div class="section-label">// escolha a linha</div>
+    <div class="line-switcher" id="line-switcher"></div>
+
+    <div class="daytype-switcher" id="daytype-switcher">
+      <span class="daytype-label">Dia:</span>
+      <button class="daytype-btn" data-daytype="weekday">Dias úteis</button>
+      <button class="daytype-btn" data-daytype="saturday">Sábado</button>
+      <button class="daytype-btn" data-daytype="sunday">Domingo e feriado</button>
+    </div>
+
+    <div class="viewing-banner hidden" id="viewing-banner"></div>
+
+    <div class="smart-row" id="smart-row">
+      <div class="smart-card going">
+        <div>
+          <div class="smart-label"><span class="status-dot go"></span><span id="smart-label-go-text">Terminal → Shopping</span></div>
+          <div class="smart-time" id="smart-time-go">--:--</div>
+        </div>
+        <div class="countdown" id="smart-count-go">—</div>
+      </div>
+      <div class="smart-card returning">
+        <div>
+          <div class="smart-label"><span class="status-dot ret"></span><span id="smart-label-ret-text">Shopping → Terminal</span></div>
+          <div class="smart-time green" id="smart-time-ret">--:--</div>
+        </div>
+        <div class="countdown" id="smart-count-ret">—</div>
+      </div>
+    </div>
+    <div class="section-label">// tabela de horários</div>
+    <div class="bus-columns">
+      <div class="bus-panel">
+        <div class="bus-panel-header">
+          <div class="panel-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 8h10M7 11h5"/></svg></div>
+          <div class="panel-title" id="panel-title-go">Terminal → Shopping</div>
+        </div>
+        <div class="bus-panel-body" id="panel-go"></div>
+      </div>
+      <div class="bus-panel">
+        <div class="bus-panel-header">
+          <div class="panel-icon green-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 8h10M12 11h5"/></svg></div>
+          <div class="panel-title" id="panel-title-ret">Shopping → Terminal</div>
+        </div>
+        <div class="bus-panel-body" id="panel-ret"></div>
+      </div>
+    </div>
+    <div class="legend-card">
+      <div class="legend-heading">Legenda</div>
+      <div class="legend-items" id="legend-items">
+        <div class="legend-item"><div class="legend-dot jl">JL</div>Residencial Lupo</div>
+        <div class="legend-item"><div class="legend-dot fc">FC</div>Fábrica de Cueca</div>
+        <div class="legend-item"><div class="legend-dot fcv">VOLVO</div>FC com veículo Volvo</div>
+      </div>
+    </div>
+
+    <div class="corujao-card hidden" id="corujao-card">
+      <div class="corujao-heading">🦉 Corujão — região atendida pelo Corujão Norte</div>
+      <div class="corujao-times" id="corujao-times"></div>
+      <div class="corujao-note">Horário de saída do terminal atendendo a região da linha, fora do trajeto regular acima.</div>
+    </div>
+  </main>
+  <footer>// Portal 1INFO-2</footer>
+<script src="js/data.js"></script>
+<script src="js/core.js"></script>
+<script src="js/onibus.js"></script>
+</body>
+</html>

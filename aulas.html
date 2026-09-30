@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F3EDE6">
+<title>Grade de Aulas — Portal 1INFO-2</title>
+<script>try{if(localStorage.getItem('theme')==='dark')document.documentElement.dataset.theme='dark'}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="css/aulas.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="aulas">
+<main>
+    <div class="today-banner" id="today-banner">
+      <span class="today-banner-label" id="banner-label">Hoje</span>
+      <div class="today-classes" id="banner-classes"></div>
+    </div>
+    <div id="legend" class="legend"></div>
+    <div class="schedule-card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Horário</th>
+              <th data-dow="1">Segunda</th>
+              <th data-dow="2">Terça</th>
+              <th data-dow="3">Quarta</th>
+              <th data-dow="4">Quinta</th>
+              <th data-dow="5">Sexta</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-start="12:35" data-end="13:25">
+              <td class="time-cell">12:35 – 13:25</td>
+              <td><span class="subj-pill s-art"  data-code="ARQART1"><span class="subj-name">Artes</span><span class="subj-code">ARQART1</span></span></td>
+              <td><span class="subj-pill s-incp" data-code="ARQINCP"><span class="subj-name">Intro. Computação</span><span class="subj-code">ARQINCP</span></span></td>
+              <td></td>
+              <td><span class="subj-pill s-lpr"  data-code="ARQLPR1"><span class="subj-name">Língua Portuguesa</span><span class="subj-code">ARQLPR1</span></span></td>
+              <td><span class="subj-pill s-prog" data-code="ARQPROG"><span class="subj-name">Programação</span><span class="subj-code">ARQPROG</span></span></td>
+            </tr>
+            <tr data-start="13:25" data-end="14:15">
+              <td class="time-cell">13:25 – 14:15</td>
+              <td><span class="subj-pill s-art"  data-code="ARQART1"><span class="subj-name">Artes</span><span class="subj-code">ARQART1</span></span></td>
+              <td><span class="subj-pill s-incp" data-code="ARQINCP"><span class="subj-name">Intro. Computação</span><span class="subj-code">ARQINCP</span></span></td>
+              <td></td>
+              <td><span class="subj-pill s-lpr"  data-code="ARQLPR1"><span class="subj-name">Língua Portuguesa</span><span class="subj-code">ARQLPR1</span></span></td>
+              <td><span class="subj-pill s-prog" data-code="ARQPROG"><span class="subj-name">Programação</span><span class="subj-code">ARQPROG</span></span></td>
+            </tr>
+            <tr data-start="14:25" data-end="15:15">
+              <td class="time-cell">14:25 – 15:15</td>
+              <td><span class="subj-pill s-geo"  data-code="ARQGEO1"><span class="subj-name">Geografia</span><span class="subj-code">ARQGEO1</span></span></td>
+              <td><span class="subj-pill s-ing"  data-code="ARQING1"><span class="subj-name">Inglês</span><span class="subj-code">ARQING1</span></span></td>
+              <td><span class="subj-pill s-efi"  data-code="ARQEFI1"><span class="subj-name">Ed. Física</span><span class="subj-code">ARQEFI1</span></span></td>
+              <td><span class="subj-pill s-iwb"  data-code="ARQIWB1"><span class="subj-name">Interfaces Web</span><span class="subj-code">ARQIWB1</span></span></td>
+              <td><span class="subj-pill s-prog" data-code="ARQPROG"><span class="subj-name">Programação</span><span class="subj-code">ARQPROG</span></span></td>
+            </tr>
+            <tr data-start="15:15" data-end="16:05">
+              <td class="time-cell">15:15 – 16:05</td>
+              <td><span class="subj-pill s-geo"  data-code="ARQGEO1"><span class="subj-name">Geografia</span><span class="subj-code">ARQGEO1</span></span></td>
+              <td><span class="subj-pill s-ing"  data-code="ARQING1"><span class="subj-name">Inglês</span><span class="subj-code">ARQING1</span></span></td>
+              <td><span class="subj-pill s-efi"  data-code="ARQEFI1"><span class="subj-name">Ed. Física</span><span class="subj-code">ARQEFI1</span></span></td>
+              <td><span class="subj-pill s-iwb"  data-code="ARQIWB1"><span class="subj-name">Interfaces Web</span><span class="subj-code">ARQIWB1</span></span></td>
+              <td><span class="subj-pill s-prog" data-code="ARQPROG"><span class="subj-name">Programação</span><span class="subj-code">ARQPROG</span></span></td>
+            </tr>
+            <tr data-start="16:20" data-end="17:10">
+              <td class="time-cell">16:20 – 17:10</td>
+              <td><span class="subj-pill s-mat"  data-code="ARQMAT1"><span class="subj-name">Matemática</span><span class="subj-code">ARQMAT1</span></span></td>
+              <td><span class="subj-pill s-fis"  data-code="ARQFIS1"><span class="subj-name">Física</span><span class="subj-code">ARQFIS1</span></span></td>
+              <td><span class="subj-pill s-fil"  data-code="ARQFIL1"><span class="subj-name">Filosofia</span><span class="subj-code">ARQFIL1</span></span></td>
+              <td></td>
+              <td><span class="subj-pill s-mat"  data-code="ARQMAT1"><span class="subj-name">Matemática</span><span class="subj-code">ARQMAT1</span></span></td>
+            </tr>
+            <tr data-start="17:10" data-end="18:00">
+              <td class="time-cell">17:10 – 18:00</td>
+              <td><span class="subj-pill s-mat"  data-code="ARQMAT1"><span class="subj-name">Matemática</span><span class="subj-code">ARQMAT1</span></span></td>
+              <td><span class="subj-pill s-fis"  data-code="ARQFIS1"><span class="subj-name">Física</span><span class="subj-code">ARQFIS1</span></span></td>
+              <td><span class="subj-pill s-fil"  data-code="ARQFIL1"><span class="subj-name">Filosofia</span><span class="subj-code">ARQFIL1</span></span></td>
+              <td></td>
+              <td><span class="subj-pill s-mat"  data-code="ARQMAT1"><span class="subj-name">Matemática</span><span class="subj-code">ARQMAT1</span></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+<script src="js/data.js"></script>
+<script src="js/core.js"></script>
+<script src="js/aulas.js"></script>
+</body>
+</html>

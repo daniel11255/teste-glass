@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F3EDE6">
+<title>Calendário | Portal 1INFO-2</title>
+<script>try{if(localStorage.getItem('theme')==='dark')document.documentElement.dataset.theme='dark'}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="css/calendario.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="calendario">
+<!-- Overlay de Seleção de Categoria (Unificado) -->
+  <div id="category-selector" class="category-selector-overlay" hidden>
+    <div class="category-selector-card scale-in">
+      <h2 class="section-title" style="margin-bottom: 8px;">O que vamos criar?</h2>
+      <p style="color: var(--muted); font-size: 14px;">Escolha uma categoria para começar</p>
+
+      <div class="category-options">
+        <button class="category-opt-btn" data-cat="evento"><div class="icon" style="background: var(--accent);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><div style="font-weight: 800;">Novo Evento</div><div style="font-size: 12px; color: var(--muted);">Compromissos e lembretes</div></div></button>
+        <button class="category-opt-btn" data-cat="sabado-letivo"><div class="icon" style="background: #2D7A50;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><div><div style="font-weight: 800;">Sábado Letivo</div><div style="font-size: 12px; color: var(--muted);">Reposição de aulas</div></div></button>
+      </div>
+      <button class="btn btn-ghost" style="margin-top: 20px; width: 100%;" onclick="document.getElementById('category-selector').hidden = true; switchTab('calendar')">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- Overlay de Carregamento -->
+  <div id="loading-overlay" class="loading-overlay" hidden>
+    <div class="spinner"></div>
+    <p style="font-weight: 700;">Salvando alterações...</p>
+  </div>
+
+  <!-- Modal de Confirmação Genérico -->
+  <div id="confirm-modal" class="modal-overlay" hidden>
+    <div class="modal-card">
+      <h2 id="confirm-title">Confirmar ação</h2>
+      <p id="confirm-message">Você tem certeza que deseja prosseguir?</p>
+      <div class="modal-actions">
+        <button id="confirm-yes" class="btn btn-primary">Sim, continuar</button>
+        <button id="confirm-no" class="btn btn-ghost">Não, cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <header class="page-head">
+      <div id="page-title-container">
+        <div class="eyebrow">Calendário escolar</div>
+        <h1>Compromissos da turma</h1>
+      </div>
+      <div class="head-meta">
+        <div class="next-event-card" id="next-event-card">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+            <div>
+              <div class="next-event-kicker">Próximo evento</div>
+              <div class="next-event-title" id="next-event-title">Nenhum evento agendado</div>
+              <div class="next-event-meta" id="next-event-meta">Cadastre um novo compromisso</div>
+            </div>
+            <button class="btn btn-ghost" type="button" id="view-next-details" hidden style="white-space:nowrap;">Ver detalhes</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="view-tabs" role="tablist" aria-label="Áreas do calendário">
+      <div class="tab-indicator" id="tab-indicator"></div>
+      <button class="tab-btn active" type="button" role="tab" aria-selected="true" data-tab="calendar">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Visualização
+      </button>
+      <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="editor">
+        <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+        Novo Registro
+      </button>
+      <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="manage">
+        <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        Gerenciar
+      </button>
+    </div>
+
+    <!-- Barra de Pesquisa -->
+    <div class="search-wrapper" id="search-container">
+      <select id="calendarSubjectFilter" aria-label="Filtrar eventos por matéria">
+        <option value="">Exibir todas as matérias</option>
+        <option value="Artes">Artes</option>
+        <option value="Educação Física">Educação Física</option>
+        <option value="Filosofia">Filosofia</option>
+        <option value="Física">Física</option>
+        <option value="Geografia">Geografia</option>
+        <option value="Inglês">Inglês</option>
+        <option value="Interfaces Web">Interfaces Web</option>
+        <option value="Introdução à Computação">Introdução à Computação</option>
+        <option value="Língua Portuguesa">Língua Portuguesa</option>
+        <option value="Matemática">Matemática</option>
+        <option value="Programação">Programação</option>
+        <option value="sabado-letivo">Sábado Letivo</option>
+      </select>
+    </div>
+
+    <section class="tab-panel active" id="panel-calendar" role="tabpanel">
+      <!-- Painel de Resultados de Filtro (Sub-aba) -->
+      <div id="filtered-results-view" class="filtered-results-area" hidden></div>
+
+      <div class="calendar-layout">
+        <section class="calendar-card" aria-label="Calendário mensal">
+          <div class="calendar-toolbar">
+            <div class="month-title" id="month-title">Mês</div>
+            <div class="toolbar-actions">
+              <button class="icon-btn" type="button" id="prev-month" aria-label="Mês anterior"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
+              <button class="icon-btn" type="button" id="next-month" aria-label="Próximo mês"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></button>
+            </div>
+          </div>
+          <div class="calendar-scroll">
+            <div class="calendar-grid">
+              <div class="weekdays" aria-hidden="true">
+                <div class="weekday">Dom</div><div class="weekday">Seg</div><div class="weekday">Ter</div><div class="weekday">Qua</div><div class="weekday">Qui</div><div class="weekday">Sex</div><div class="weekday">Sáb</div>
+              </div>
+              <div class="month-grid" id="month-grid"></div>
+            </div>
+          </div>
+        </section>
+
+        <aside class="day-panel" id="day-panel" aria-live="polite" aria-modal="true" role="dialog" hidden>
+          <section class="day-sheet" aria-labelledby="selected-day-title">
+            <div class="panel-head">
+              <div>
+                <div class="panel-title" id="selected-day-title">Dia selecionado</div>
+                <div class="panel-sub" id="selected-day-sub">0 eventos</div>
+              </div>
+              <button class="panel-close" type="button" id="close-day-panel" aria-label="Fechar detalhes do dia">
+                <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+              </button>
+            </div>
+            <div class="panel-body" id="selected-day-events"></div>
+          </section>
+        </aside>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="panel-editor" role="tabpanel">
+      <!-- Layout Principal do Editor (Oculto até uma categoria ser selecionada) -->
+      <div id="editor-main-view" class="editor-layout sidebar-hidden" hidden>
+        <section class="editor-panel">
+          <h2 class="section-title" id="form-heading">Novo evento</h2>
+          <form id="event-form">
+            <input type="hidden" id="event-id">
+            <input type="hidden" id="event-category">
+            <div class="form-grid">
+              <div class="field full">
+                <label for="event-title">Título</label>
+                <input id="event-title" type="text" maxlength="90" required>
+              </div>
+              <div class="field">
+                <label for="event-date">Data</label>
+                <input id="event-date" type="date" required>
+              </div>
+              <div class="field">
+                <label for="event-subject">Matéria</label>
+                <select id="event-subject" required>
+                  <option value="">Selecione a matéria</option>
+                  <option value="Artes">Artes</option>
+                  <option value="Educação Física">Educação Física</option>
+                  <option value="Filosofia">Filosofia</option>
+                  <option value="Física">Física</option>
+                  <option value="Geografia">Geografia</option>
+                  <option value="Inglês">Inglês</option>
+                  <option value="Interfaces Web">Interfaces Web</option>
+                  <option value="Introdução à Computação">Introdução à Computação</option>
+                  <option value="Língua Portuguesa">Língua Portuguesa</option>
+                  <option value="Matemática">Matemática</option>
+                  <option value="Programação">Programação</option>
+                  
+                </select>
+              </div>
+              <div class="field full">
+                <label for="event-horario">Horário</label>
+                <input id="event-horario" type="text" placeholder="Ex: 13:00 às 14:00, Tarde, 08h..." required>
+              </div>
+              <div class="field full">
+                <label for="event-description">Descrição e detalhes</label>
+                <textarea id="event-description" maxlength="900"></textarea>
+              </div>
+              <div class="field full">
+                <label>Links</label>
+                <div id="links-list"></div>
+                <!-- Painel de criação de link (inicialmente oculto) -->
+                <div id="link-creator-box" hidden style="margin-bottom: 12px; padding: 16px; background: var(--surface-2); border: 2px solid var(--accent); border-radius: 12px; animation: scaleIn 0.2s ease;">
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                     <div class="field">
+                        <label style="font-size: 10px;">NOME DO LINK</label>
+                        <input type="text" id="new-link-label" placeholder="Ex: Material">
+                     </div>
+                     <div class="field">
+                        <label style="font-size: 10px;">URL (LINK)</label>
+                        <input type="text" id="new-link-url" placeholder="https://...">
+                     </div>
+                  </div>
+                  <div style="display: flex; gap: 8px;">
+                     <button class="btn btn-primary" type="button" id="confirm-link-btn" style="flex: 1;">Confirmar Link</button>
+                     <button class="btn btn-ghost" type="button" id="cancel-link-btn">Cancelar</button>
+                  </div>
+                </div>
+                <button class="btn btn-ghost" type="button" id="add-link"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Adicionar link</button>
+              </div>
+              <div class="field full">
+                <label>Anexos</label>
+                <div class="attachment-area">
+                  <input class="file-input" id="event-files" type="file" multiple>
+                  <label class="btn btn-ghost" for="event-files"><svg viewBox="0 0 24 24"><path d="M21.44 11.05 12.25 20.24a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>Selecionar arquivos</label>
+                </div>
+                <div class="attachment-list" id="attachments-list"></div>
+              </div>
+            </div>
+            <div class="form-actions">
+              <div class="form-actions-group" style="width: 100%; justify-content: flex-end;">
+                <button class="btn btn-primary" type="submit"><svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg>Salvar evento</button>
+              </div>
+            </div>
+          </form>
+        </section>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="panel-manage" role="tabpanel">
+      <div class="manage-layout">
+        <section class="events-panel" style="width: 100%;">
+          <h2 class="section-title">Gerenciar Eventos Cadastrados</h2>
+          <div id="bulk-actions-bar" class="bulk-actions" hidden>
+            <span id="bulk-count" style="font-size: 12px; font-weight: 700;">0 selecionados</span>
+            <button class="btn btn-danger" style="min-height: 32px; padding: 4px 12px;" onclick="handleBulkDelete()">Excluir selecionados</button>
+          </div>
+          <div class="events-list" id="events-list" style="max-height: none;"></div>
+        </section>
+      </div>
+    </section>
+  </main>
+<script src="js/data.js"></script>
+<script src="js/core.js"></script>
+<script src="js/calendario.js"></script>
+</body>
+</html>

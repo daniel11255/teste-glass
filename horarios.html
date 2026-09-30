@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F3EDE6">
+<title>Professores — Portal 1INFO-2</title>
+<script>try{if(localStorage.getItem('theme')==='dark')document.documentElement.dataset.theme='dark'}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="css/horarios.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="horarios">
+<div class="container">
+    <div class="page-header">
+      <div class="header-top">
+        <div>
+          <div class="page-title">Atendimento de Professores</div>
+          <div class="page-sub">// Horários e contatos disponíveis</div>
+        </div>
+        <button class="btn-manage" onclick="openManageModal()" title="Adicionar ou Editar Atendimentos">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          <span>Gerenciar</span>
+        </button>
+      </div>
+      <div class="search-wrapper">
+        <input type="text" id="searchBar" placeholder="Buscar professor ou matéria...">
+        <div id="searchIndicator" class="search-loading-indicator">
+          <div class="status-spinner"></div>
+          <span>PROCESSANDO...</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Bloco de Informações principal -->
+    <div id="tableCard" class="table-card">
+      <div id="emptyOverlay" class="empty-overlay">
+        <div id="emptyContent"></div>
+      </div>
+      
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Professor</th>
+              <th>Matéria</th>
+              <th>Horário</th>
+              <th>Sala</th>
+              <th>E-mail</th>
+            </tr>
+          </thead>
+          <tbody id="lista-professores"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Gerenciamento -->
+  <div id="manageModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title" id="modalTitle">Gerenciar Professores</div>
+        <button class="copy-btn" onclick="closeManageModal()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Lista ou Formulário injetados aqui -->
+      </div>
+      <div class="modal-footer" id="modalFooter">
+        <button class="btn-manage" onclick="closeManageModal()" style="background:var(--surface-2)">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Confirmação Customizado -->
+  <div id="confirmModal" class="modal-overlay" style="z-index: 1100;">
+    <div class="modal-card" style="max-width: 380px; text-align: center; padding: 24px;">
+      <h2 id="confirmTitle" style="font-size: 18px; font-weight: 800; margin-bottom: 8px;">Confirmação</h2>
+      <p id="confirmMessage" style="font-size: 14px; color: var(--muted); margin-bottom: 24px; line-height: 1.4;">Tem certeza que deseja prosseguir?</p>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <button id="confirmYes" class="btn-manage" style="background: var(--accent); color: white; border: none; justify-content: center; width: 100%;">Sim, confirmar</button>
+        <button id="confirmNo" class="btn-manage" style="background: var(--surface-2); justify-content: center; width: 100%;">Cancelar</button>
+      </div>
+    </div>
+  </div>
+<script src="js/data.js"></script>
+<script src="js/core.js"></script>
+<script src="js/horarios.js"></script>
+</body>
+</html>
