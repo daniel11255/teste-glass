@@ -72,7 +72,7 @@ a { color: inherit; }
 h1, .page-title { font-family: var(--display); font-weight: 800; letter-spacing: -.03em; font-size: clamp(24px, 6vw, 32px); line-height: 1.1; }
 .page-shell, main, .container { animation: fadeIn .25s ease-out; }
 
-/* ── Topo e dock (a navegação é gerada por js/core.js) ──────────────── */
+/* ── Topo e dock (a navegação é gerada por core.js) ──────────────── */
 .topnav {
   position: sticky; top: calc(8px + env(safe-area-inset-top, 0px)); z-index: 200; height: 54px;
   margin: calc(8px + env(safe-area-inset-top, 0px)) auto 0; width: calc(100% - 20px); max-width: 900px; padding: 0 8px 0 12px;
